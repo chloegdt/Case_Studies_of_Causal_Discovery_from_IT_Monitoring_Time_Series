@@ -1,4 +1,4 @@
-#Case studies of causal discovery for IT monitoring time series
+# Case studies of causal discovery for IT monitoring time series
 
 ## Data
 
