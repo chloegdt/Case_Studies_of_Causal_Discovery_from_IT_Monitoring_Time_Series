@@ -1,0 +1,8 @@
+"ram_global_prct","cpu_global_prct","disk_io_read_mega_byte","disk_io_write_mega_byte","consumers_causality_1","messages_causality_1","publish_rate_causality_1"
+"ram_global_prct",0,0,0,0,0,3,0
+"cpu_global_prct",0,0,0,0,0,0,0
+"disk_io_read_mega_byte",0,0,0,0,0,0,0
+"disk_io_write_mega_byte",0,0,0,0,0,0,0
+"consumers_causality_1",0,0,0,0,0,0,0
+"messages_causality_1",3,0,0,0,0,0,0
+"publish_rate_causality_1",0,0,0,0,0,0,0
