@@ -17,7 +17,7 @@ import itertools
 from joblib import Parallel, delayed
 from datetime import datetime
 
-from tigramite.independence_tests import ParCorr
+from Algorithms.tigramite.independence_tests import ParCorr
 
 from tqdm import tqdm
 

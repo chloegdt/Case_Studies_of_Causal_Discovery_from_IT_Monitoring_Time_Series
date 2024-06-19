@@ -6,10 +6,10 @@ import numpy as np
 
 from sklearn.linear_model import LinearRegression as lr
 
-from tigramite.pcmci import PCMCI
+from Algorithms.tigramite.pcmci import PCMCI
 from Algorithms.Hybrids_of_CB_and_NB.pcmci_with_bk import PCMCI as PCMCIbk
-from tigramite.independence_tests import ParCorr
-from tigramite import data_processing as pp
+from Algorithms.tigramite.independence_tests import ParCorr
+from Algorithms.tigramite import data_processing as pp
 
 from subprocess import Popen, PIPE
 import os
