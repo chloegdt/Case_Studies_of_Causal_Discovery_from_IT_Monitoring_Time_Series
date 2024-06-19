@@ -1,3 +1,4 @@
+import click
 import random
 from Algorithms.Hybrids_of_CB_and_NB.cbnb_e import CBNBe
 from Algorithms.Hybrids_of_CB_and_NB.nbcb_e import NBCBe
@@ -28,12 +29,29 @@ dict_colname_to_texname = {
     "disk_io_read_mega_byte": "DiskR"
 }
 
+@click.command()
+@click.option('--tau', default=15, type=int, help='param_tau_max')
+@click.option('--sig', default=0.05, type=float, help='param_sig_level')
+@click.option('--param_dataset', default=1, help='1 or 2')
+@click.argument('method', type=click.Choice(['CBNB_W', 'CBNB_E', 'NBCB_W', 'NBCB_E', 'GCMVL', 'PCMCI', 'PCGCE', 'VARLINGAM', 'TIMINO', 'DYNOTEARS'], case_sensitive=False))
+def run_command(method, tau, sig, param_dataset):
+    """
+    METHOD: The causal discovery methode to use (CBNB_w, CBNB_e, NBCB_w, NBCB_e, GCMVL, PCMCI, PCGCE, VARLINGAM, TiMINO, DYNOTEARS)
+    """
+    param_method = method.upper()
+    param_tau_max = tau
+    param_sig_level = sig
+    param_dataset = param_dataset
+    click.echo(f"Run : tau ={tau}, sig = {sig}, dataset = {param_dataset}, method = {method}")
+    run(param_method, param_tau_max, param_sig_level, param_dataset)
 
-if __name__ == '__main__':
-    param_method = "CBNB_w"  # CBNB_w CBNB_e NBCB_w NBCB_e GCMVL PCMCI PCGCE VarLiNGAM TiMINO Dynotears
-    param_tau_max = 15
-    param_sig_level = 0.05
-    param_dataset = "1"  # 1 2
+
+
+def run(param_method, param_tau_max, param_sig_level, param_dataset):
+    param_method = param_method  # CBNB_w CBNB_e NBCB_w NBCB_e GCMVL PCMCI PCGCE VarLiNGAM TiMINO Dynotears
+    param_tau_max = param_tau_max
+    param_sig_level = param_sig_level
+    param_dataset = str(param_dataset)  # 1 2
 
     f1_adjacency_list = []
     f1_orientation_list = []
@@ -66,21 +84,21 @@ if __name__ == '__main__':
             elif summary_matrix[col_i].loc[col_j] != 0:
                 causal_graph_true.add_edge(Edge(GraphNode(col_j), GraphNode(col_i), Endpoint.TAIL, Endpoint.ARROW))
 
-    if param_method == "NBCB_w":
+    if param_method == "NBCB_W":
         nbcb = NBCBw(param_data, param_tau_max, param_sig_level, model="linear",  indtest="linear", cond_indtest="linear")
         nbcb.run()
         causal_graph_hat = nbcb.causal_graph
-    elif param_method == "CBNB_w":
+    elif param_method == "CBNB_W":
         cbnb = CBNBw(param_data, param_tau_max, param_sig_level, model="linear", indtest="linear",
                      cond_indtest="linear")
         cbnb.run()
         causal_graph_hat = cbnb.causal_graph
-    elif param_method == "NBCB_e":
+    elif param_method == "NBCB_E":
         nbcb = NBCBe(param_data, param_tau_max, param_sig_level, model="linear", indtest="linear",
                      cond_indtest="linear")
         nbcb.run()
         causal_graph_hat = nbcb.causal_graph
-    elif param_method == "CBNB_e":
+    elif param_method == "CBNB_E":
         cbnb = CBNBe(param_data, param_tau_max, param_sig_level, model="linear", indtest="linear",
                      cond_indtest="linear")
         cbnb.run()
@@ -93,11 +111,11 @@ if __name__ == '__main__':
         causal_graph_hat = Algorithms.algorithms.pcmciplus(param_data, tau_max=param_tau_max, sig_level=param_sig_level)
     elif param_method == "PCGCE":
         causal_graph_hat = Algorithms.algorithms.pcgce(param_data, tau_max=param_tau_max, sig_level=param_sig_level)
-    elif param_method == "VarLiNGAM":
+    elif param_method == "VARLINGAM":
         causal_graph_hat = Algorithms.algorithms.varlingam(param_data, tau_max=param_tau_max, sig_level=param_sig_level)
-    elif param_method == "TiMINO":
+    elif param_method == "TIMINO":
         causal_graph_hat = Algorithms.algorithms.run_timino_from_r([[param_data, "data"], [param_sig_level, "alpha"], [param_tau_max, "nlags"]])
-    elif param_method == "Dynotears":
+    elif param_method == "DYNOTEARS":
         causal_graph_hat = Algorithms.algorithms.dynotears(param_data, tau_max=param_tau_max, sig_level=param_sig_level)
     else:
         causal_graph_hat = None
@@ -118,3 +136,7 @@ if __name__ == '__main__':
     print("F1 adjacency with desired graph= " + str(np.mean(f1_adjacency_list)) + " +- " + str(np.var(f1_adjacency_list)))
     print("F1 orientation with desired graph= " + str(np.mean(f1_orientation_list)) + " +- " + str(np.var(f1_orientation_list)))
     print("Percentage of detection with desired graph= " + str(percentage_of_detection_skeleton/100))
+
+
+if __name__ == '__main__':
+    run_command()
