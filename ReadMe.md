@@ -31,7 +31,7 @@ The currently available options (more are in progress) are:
 - ```--help```   show the usage and available options
 
 > Note: if a dataset is provided for Ingestion, it will be ignored
-
+> Note2: the filename must not begin with two hyphens (--)
 ____________________________________________
 ## Data
 
