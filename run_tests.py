@@ -19,7 +19,7 @@ def validate_save(ctx, param, value):
         return None
     elif value == "":
         raise click.BadParameter("Filename cannot be empty if --save is provided.")
-    elif value == "--show":
+    elif value.startswith("--"):
         raise click.BadParameter("Filename cannot be empty.")
     else:
         return value
