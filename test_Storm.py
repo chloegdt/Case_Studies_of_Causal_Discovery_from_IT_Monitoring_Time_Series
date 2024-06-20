@@ -34,19 +34,23 @@ dict_colname_to_texname = {
 @click.command()
 @click.option('--tau', default=15, type=int, help='param_tau_max')
 @click.option('--sig', default=0.05, type=float, help='param_sig_level')
+@click.option('--save', default=None, type=str, help='The filename to save the graph')
+@click.option('--show', is_flag=True, help='Show the graph')
 @click.argument('method', type=click.Choice(['CBNB_W', 'CBNB_E', 'NBCB_W', 'NBCB_E', 'GCMVL', 'PCMCI', 'PCGCE', 'VARLINGAM', 'TIMINO', 'DYNOTEARS'], case_sensitive=False))
-def run_command(method, tau, sig):
+def run_command(method, tau, sig, save, show):
     """
     METHOD: The causal discovery methode to use (CBNB_w, CBNB_e, NBCB_w, NBCB_e, GCMVL, PCMCI, PCGCE, VARLINGAM, TiMINO, DYNOTEARS)
     """
     param_method = method.upper()
     param_tau_max = int(tau)
     param_sig_level = sig
-    click.echo(f"Run : tau ={tau}, sig = {sig}, method = {method}")
-    run(param_method, param_tau_max, param_sig_level)
+    save = save
+    show = show
+    click.echo(f"Run : tau ={tau}, sig = {sig}, method = {method}, save = {save}, show = {show}")
+    run(param_method, param_tau_max, param_sig_level, save, show)
 
 
-def run(param_method, param_tau_max, param_sig_level):
+def run(param_method, param_tau_max, param_sig_level, save, show):
     param_method = param_method  # CBNB_w NBCB_w CBNB_e NBCB_e GCMVL CCM PCMCI PCGCE VarLiNGAM TiMINO Dynotears
     param_tau_max = param_tau_max
     param_sig_level = param_sig_level
@@ -119,7 +123,7 @@ def run(param_method, param_tau_max, param_sig_level):
     else:
         causal_graph_hat = None
     print(causal_graph_hat)
-    plot_graph_with_false_positives(causal_graph_hat, param_data.columns, causal_graph_true, dict_colname_to_texname)
+    plot_graph_with_false_positives(causal_graph_hat, param_data.columns, causal_graph_true, dict_colname_to_texname, save=save, show=show)
 
     fa = f1_score(causal_graph_hat, causal_graph_true, ignore_orientation=True)
     fo = f1_score(causal_graph_hat, causal_graph_true, ignore_orientation=False)
