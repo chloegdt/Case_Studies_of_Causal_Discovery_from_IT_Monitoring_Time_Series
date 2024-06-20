@@ -25,10 +25,12 @@ can be executed using this command line in the terminal :
 The currently available options (more are in progress) are:
 - ```--tau INTEGER``` : lag (the default value depends on the dataset)
 - ```--sig FLOAT```  :  significance threshold (default 0.05)
-- ```--param_dataset INTEGER```  1 or 2 for MOM, WEB and ANTIVIRUS
+- ```--dataset INTEGER```  1 or 2 for MOM, WEB and ANTIVIRUS
+- ```--save STR``` : save the graph with the given filename
+- ```--show``` : show the graph
 - ```--help```   show the usage and available options
 
-> Note: if a param_dataset is provided for Ingestion, it will be ignored
+> Note: if a dataset is provided for Ingestion, it will be ignored
 
 ____________________________________________
 ## Data
