@@ -1,7 +1,7 @@
 import click
 import subprocess
 
-SCRIPT_MAP = {
+SYSTEMS = {
         'MOM': 'test_MoM.py',
         'INGESTION': 'test_Storm.py',
         'WEB': 'test_Web_processed.py',
@@ -14,15 +14,16 @@ DEFAULT_TAU = {
         }
 
 @click.command(help = "Run a script for test")
-@click.argument('dataset', type=click.Choice(SCRIPT_MAP.keys(), case_sensitive = False))
+@click.argument('system', type=click.Choice(SYSTEMS.keys(), case_sensitive = False))
 @click.argument('method', type=click.Choice(['CBNB_W', 'CBNB_E', 'NBCB_W', 'NBCB_E', 'GCMVL', 'PCMCI', 'PCGCE', 'VARLINGAM', 'TIMINO', 'DYNOTEARS'], case_sensitive=False))
 @click.option('--tau', default=None, type=int, help='param_tau_level')
 @click.option('--sig', default=0.05, type=float, help='param_sig_level')
-@click.option('--param_dataset', default=1, help='1 or 2 for MOM, WEB and ANTIVIRUS')
-
-def run_test(dataset, method, tau, sig, param_dataset):
-    dataset = dataset.upper()
-    script = SCRIPT_MAP[dataset]
+@click.option('--dataset', default=1, help='1 or 2 for MOM, WEB and ANTIVIRUS')
+@click.option('--save', default=None, type=str, help='save the graph with the given filename')
+@click.option('--show', is_flag=True, help='show the graph')
+def run_test(system, method, tau, sig, dataset, save, show):
+    system = system.upper()
+    script = SYSTEMS[system]
 
     if script in ["test_Antivirus_processed.py", "test_Web_processed.py"]:
         default_tau = DEFAULT_TAU["WEB_ANTIVIRUS"]
@@ -40,15 +41,20 @@ def run_test(dataset, method, tau, sig, param_dataset):
             str(tau), 
             '--sig', 
             str(sig), 
-            '--param_dataset', str(param_dataset)]
+            '--dataset', str(dataset)]
 
-    if dataset == "INGESTION":
+    if system == "INGESTION":
         command = command[:-2]
+
+    if save:
+        command.extend(['--save', save])
+    if show:
+        command.extend(['--show'])
 
     print(command)
     result = subprocess.run(command, capture_output=True, text=True)
     print(result.stdout)
-    #print(result.stderr)
+    print(result.stderr)
 
 if __name__ == '__main__':
     run_test()

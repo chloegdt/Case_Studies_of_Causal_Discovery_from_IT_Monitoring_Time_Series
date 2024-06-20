@@ -269,7 +269,7 @@ def to_pydot_with_false_positives(G: Graph, edges: List[Edge] = None, labels: Li
     return pydot_g
 
 
-def plot_graph_with_false_positives(graph, labels, truegraph=None, dict_colname_to_texname=None):
+def plot_graph_with_false_positives(graph, labels, truegraph=None, dict_colname_to_texname=None, save=None, show=False):
     pdy = to_pydot_with_false_positives(graph, labels=labels, names_env=[], TG=truegraph,
                                         dict_colname_to_texname=dict_colname_to_texname)
     png_str = pdy.create_png(prog='dot')
@@ -282,4 +282,9 @@ def plot_graph_with_false_positives(graph, labels, truegraph=None, dict_colname_
     # plot the image
     plt.imshow(img, aspect='equal')
     plt.axis('off')
-    plt.show()
+
+    #If the 'save' option has been provided, we save with the given filename
+    if save != None:
+        plt.savefig(save)
+    if show:
+        plt.show()
