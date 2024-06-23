@@ -20,7 +20,7 @@ from causallearn.graph.Endpoint import Endpoint
 from causallearn.graph.GeneralGraph import GeneralGraph
 from causallearn.graph.GraphNode import GraphNode
 
-from Algorithms.lingam_master.lingam.var_lingam import VARLiNGAM
+from lingam.var_lingam import VARLiNGAM
 
 # from cbnb_w import CBNBw
 

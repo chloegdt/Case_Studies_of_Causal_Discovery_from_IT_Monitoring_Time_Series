@@ -6,10 +6,10 @@ import numpy as np
 
 from sklearn.linear_model import LinearRegression as lr
 
-from Algorithms.tigramite.pcmci import PCMCI
+from tigramite.pcmci import PCMCI
 from Algorithms.Hybrids_of_CB_and_NB.pcmci_with_bk import PCMCI as PCMCIbk
-from Algorithms.tigramite.independence_tests import ParCorr
-from Algorithms.tigramite import data_processing as pp
+from tigramite.independence_tests.parcorr import ParCorr
+from tigramite import data_processing as pp
 
 from subprocess import Popen, PIPE
 import os
@@ -20,7 +20,7 @@ from causallearn.graph.Endpoint import Endpoint
 from causallearn.graph.GeneralGraph import GeneralGraph
 from causallearn.graph.GraphNode import GraphNode
 
-from Algorithms.lingam_master.lingam.var_lingam import VARLiNGAM
+from lingam.var_lingam import VARLiNGAM
 
 import matplotlib.pyplot as plt
 

@@ -15,13 +15,13 @@ from skccm.utilities import train_test_split, exp_weight, corrcoef
 from sklearn import neighbors
 
 
-from Algorithms.tigramite.pcmci import PCMCI
-from Algorithms.tigramite.independence_tests import ParCorr
-from Algorithms.tigramite import data_processing as pp
+from tigramite.pcmci import PCMCI
+from tigramite.independence_tests.parcorr import ParCorr
+from tigramite import data_processing as pp
 
 from Algorithms.pcgce import PCGCE
 
-from Algorithms.lingam_master.lingam.var_lingam import VARLiNGAM
+from lingam.var_lingam import VARLiNGAM
 
 from subprocess import Popen, PIPE
 import os

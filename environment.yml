@@ -1,0 +1,19 @@
+name: cditmonitor
+channels: 
+ - conda-forge
+ - defaults
+dependencies:
+ - python==3.9
+ - numpy<1.24,>=1.18
+ - pip
+ - pip:
+   - git+https://github.com/jakobrunge/tigramite
+   - lingam
+   - causal-learn
+   - causalnex
+   - skccm
+#     - -r requirements.txt
+ - pydot
+ - tqdm
+ - networkx
+ - click
